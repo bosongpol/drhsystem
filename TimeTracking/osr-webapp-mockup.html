@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSR Web App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans antialiased">
+    <!-- Header -->
+    <header class="bg-blue-900 text-white p-4 flex items-center justify-between">
+        <h1 class="text-lg font-bold">OSR Web App</h1>
+        <button class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded">Logout</button>
+    </header>
+
+    <!-- Filter Section -->
+    <section class="p-4 bg-white shadow mb-4">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+            <div class="flex space-x-2">
+                <input type="text" placeholder="Search for products..." class="p-2 border border-gray-300 rounded-md w-full md:w-64">
+                <input type="text" placeholder="Max price" class="p-2 border border-gray-300 rounded-md w-full md:w-32">
+                <select class="p-2 border border-gray-300 rounded-md">
+                    <option value="">Category</option>
+                    <option value="electronic">Electronic</option>
+                    <option value="furniture">Furniture</option>
+                </select>
+                <select class="p-2 border border-gray-300 rounded-md">
+                    <option value="">Group</option>
+                    <option value="A">Group A</option>
+                    <option value="B">Group B</option>
+                </select>
+            </div>
+            <button class="mt-2 md:mt-0 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">Search</button>
+        </div>
+    </section>
+
+    <!-- Products Table -->
+    <section class="p-4 bg-white shadow overflow-auto">
+        <table class="min-w-full bg-white border">
+            <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                <tr>
+                    <th class="py-3 px-6 text-left">Select</th>
+                    <th class="py-3 px-6 text-left">Product</th>
+                    <th class="py-3 px-6 text-left">Price</th>
+                    <th class="py-3 px-6 text-left">Stock</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-600 text-sm font-light">
+                <!-- Product Rows -->
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">
+                        <input type="checkbox" class="form-checkbox text-blue-600">
+                    </td>
+                    <td class="py-3 px-6">
+                        <div class="flex items-center">
+                            <img class="w-10 h-10 object-cover mr-2" src="https://via.placeholder.com/50" alt="product">
+                            <span>ELECTROLUX เครื่องทำน้ำอุ่น EWE351</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6">3,690 บาท</td>
+                    <td class="py-3 px-6">19 units</td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">
+                        <input type="checkbox" class="form-checkbox text-blue-600">
+                    </td>
+                    <td class="py-3 px-6">
+                        <div class="flex items-center">
+                            <img class="w-10 h-10 object-cover mr-2" src="https://via.placeholder.com/50" alt="product">
+                            <span>ELECTROLUX เครื่องทำน้ำอุ่น EWE481</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6">4,990 บาท</td>
+                    <td class="py-3 px-6">8 units</td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">
+                        <input type="checkbox" class="form-checkbox text-blue-600">
+                    </td>
+                    <td class="py-3 px-6">
+                        <div class="flex items-center">
+                            <img class="w-10 h-10 object-cover mr-2" src="https://via.placeholder.com/50" alt="product">
+                            <span>HITACHI เครื่องทำน้ำอุ่น HES-38D</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6">3,790 บาท</td>
+                    <td class="py-3 px-6">19 units</td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">
+                        <input type="checkbox" class="form-checkbox text-blue-600">
+                    </td>
+                    <td class="py-3 px-6">
+                        <div class="flex items-center">
+                            <img class="w-10 h-10 object-cover mr-2" src="https://via.placeholder.com/50" alt="product">
+                            <span>HAIER เครื่องทำน้ำอุ่น E351A1(W)</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6">3,190 บาท</td>
+                    <td class="py-3 px-6">12 units</td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">
+                        <input type="checkbox" class="form-checkbox text-blue-600">
+                    </td>
+                    <td class="py-3 px-6">
+                        <div class="flex items-center">
+                            <img class="w-10 h-10 object-cover mr-2" src="https://via.placeholder.com/50" alt="product">
+                            <span>HAIER เครื่องทำน้ำอุ่น E451A(W)</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6">3,290 บาท</td>
+                    <td class="py-3 px-6">15 units</td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">
+                        <input type="checkbox" class="form-checkbox text-blue-600">
+                    </td>
+                    <td class="py-3 px-6">
+                        <div class="flex items-center">
+                            <img class="w-10 h-10 object-cover mr-2" src="https://via.placeholder.com/50" alt="product">
+                            <span>MAZUMA Pandora 45 4500W</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6">4,190 บาท</td>
+                    <td class="py-3 px-6">33 units</td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">
+                        <input type="checkbox" class="form-checkbox text-blue-600">
+                    </td>
+                    <td class="py-3 px-6">
+                        <div class="flex items-center">
+                            <img class="w-10 h-10 object-cover mr-2" src="https://via.placeholder.com/50" alt="product">
+                            <span>MAZUMA อุ่นใจ HES-300</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6">3,790 บาท</td>
+                    <td class="py-3 px-6">22 units</td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">
+                        <input type="checkbox" class="form-checkbox text-blue-600">
+                    </td>
+                    <td class="py-3 px-6">
+                        <div class="flex items-center">
+                            <img class="w-10 h-10 object-cover mr-2" src="https://via.placeholder.com/50" alt="product">
+                            <span>HITACHI HES-3600</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6">4,500 บาท</td>
+                    <td class="py-3 px-6">20 units</td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">
+                        <input type="checkbox" class="form-checkbox text-blue-600">
+                    </td>
+                    <td class="py-3 px-6">
+                        <div class="flex items-center">
+                            <img class="w-10 h-10 object-cover mr-2" src="https://via.placeholder.com/50" alt="product">
+                            <span>HITACHI HES-4800</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6">5,190 บาท</td>
+                    <td class="py-3 px-6">18 units</td>
+                </tr>
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left">
+                        <input type="checkbox" class="form-checkbox text-blue-600">
+                    </td>
+                    <td class="py-3 px-6">
+                        <div class="flex items-center">
+                            <img class="w-10 h-10 object-cover mr-2" src="https://via.placeholder.com/50" alt="product">
+                            <span>HITACHI HES-4500</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-6">5,290 บาท</td>
+                    <td class="py-3 px-6">16 units</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Action Toolbar -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white shadow p-4 flex justify-between items-center">
+        <div class="text-gray-600">Total: 40,610 บาท</div>
+        <div class="flex space-x-4">
+            <button class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded">Create Document</button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">Download PDF</button>
+        </div>
+    </div>
+</body>
+
+</html>

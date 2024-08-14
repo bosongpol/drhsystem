@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เริ่มบันทึกงาน</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-white font-bold text-xl">บันทึกเวลา</a>
+            <div>
+                <a href="index.html" class="text-white mr-4">แดชบอร์ด</a>
+                <a href="projects.html" class="text-white">โปรเจกต์</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto mt-8 p-4">
+        <!-- Header -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold">เริ่มบันทึกงาน</h1>
+            <p class="text-gray-700 mt-2">กรุณาเลือกโปรเจกต์และกรอกข้อมูลเกี่ยวกับงานของคุณก่อนเริ่มจับเวลา</p>
+        </div>
+
+        <!-- Form -->
+        <form class="bg-white p-6 rounded-lg shadow-md">
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="project">
+                    โปรเจกต์
+                </label>
+                <select id="project" name="project" class="block w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2">
+                    <option>เลือกโปรเจกต์</option>
+                    <option>รีดีไซน์เว็บไซต์</option>
+                    <option>แอปพลิเคชันมือถือ</option>
+                    <option>เว็บไซต์อีคอมเมิร์ซ</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="task-name">
+                    ชื่องาน
+                </label>
+                <input type="text" id="task-name" name="task-name" class="block w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2" placeholder="กรอกชื่องาน">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="task-details">
+                    รายละเอียดงาน
+                </label>
+                <textarea id="task-details" name="task-details" rows="4" class="block w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2" placeholder="กรอกรายละเอียดงาน"></textarea>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg"> <a href="record.html">เริ่มจับเวลา</a></button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

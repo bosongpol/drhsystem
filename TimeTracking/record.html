@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เริ่มจับเวลา</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-white font-bold text-xl">บันทึกเวลา</a>
+            <div>
+                <a href="index.html" class="text-white mr-4">แดชบอร์ด</a>
+                <a href="projects.html" class="text-white">โปรเจกต์</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto mt-8 p-4">
+        <!-- Header -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold">จับเวลางาน</h1>
+            <p class="text-gray-700 mt-2">คุณกำลังจะเริ่มจับเวลาในงานนี้</p>
+        </div>
+
+        <!-- Task Information -->
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-lg font-bold mb-4">รายละเอียดงาน</h2>
+            <p><strong>โปรเจกต์:</strong> รีดีไซน์เว็บไซต์</p>
+            <p><strong>ชื่องาน:</strong> ออกแบบ Wireframes</p>
+            <p><strong>รายละเอียด:</strong> สร้าง Wireframes สำหรับหน้า Landing Page</p>
+        </div>
+
+        <!-- Timer -->
+        <div class="bg-white p-6 rounded-lg shadow-md flex justify-between items-center">
+            <div>
+                <h2 class="text-lg font-bold">เวลาในการทำงาน</h2>
+                <p class="text-3xl mt-2" id="timer">00:00:00</p>
+            </div>
+            <div>
+                <button id="startBtn" class="bg-green-500 text-white px-6 py-2 rounded-lg mr-2">Start</button>
+                <button id="stopBtn" class="bg-red-500 text-white px-6 py-2 rounded-lg" disabled> <a href="time-summary.html">Stop</a></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript for Timer -->
+    <script>
+        let timerInterval;
+        let isRunning = false;
+        let startTime;
+        let elapsedTime = 0;
+
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const timerDisplay = document.getElementById('timer');
+
+        startBtn.addEventListener('click', () => {
+            if (!isRunning) {
+                startTimer();
+            }
+        });
+
+        stopBtn.addEventListener('click', () => {
+            if (isRunning) {
+                stopTimer();
+            }
+        });
+
+        function startTimer() {
+            isRunning = true;
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            startTime = Date.now() - elapsedTime;
+            timerInterval = setInterval(() => {
+                elapsedTime = Date.now() - startTime;
+                timerDisplay.textContent = formatTime(elapsedTime);
+            }, 1000);
+        }
+
+        function stopTimer() {
+            isRunning = false;
+            clearInterval(timerInterval);
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+        }
+
+        function formatTime(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+            const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+            const seconds = String(totalSeconds % 60).padStart(2, '0');
+            return `${hours}:${minutes}:${seconds}`;
+        }
+    </script>
+
+</body>
+</html>
