@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - ระบบบันทึกเวลาทำงาน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      body {
+        font-family: "Noto Sans Thai", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4">
+      <div class="container mx-auto px-4 flex justify-between items-center">
+        <div class="text-xl font-bold">ระบบบันทึกเวลาทำงาน</div>
+        <div class="flex items-center space-x-4">
+          <span class="hidden sm:inline">สวัสดี, คุณ user</span>
+          <button
+            class="flex items-center space-x-1 bg-blue-700 hover:bg-blue-800 px-3 py-1 rounded"
+          >
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">ออกจากระบบ</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="container mx-auto px-4 py-8 flex-grow">
+      <h1 class="text-2xl font-bold mb-6">แดชบอร์ด</h1>
+
+      <!-- Quick actions -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <button
+          class="bg-green-500 text-white p-4 rounded flex items-center justify-center space-x-2 hover:bg-green-600"
+        >
+          <i data-lucide="clock" class="w-5 h-5"></i>
+          <span>บันทึกเวลาเข้างาน</span>
+        </button>
+        <button
+          class="bg-red-500 text-white p-4 rounded flex items-center justify-center space-x-2 hover:bg-red-600"
+        >
+          <i data-lucide="clock" class="w-5 h-5"></i>
+          <span>บันทึกเวลาออกงาน</span>
+        </button>
+        <button
+          class="bg-yellow-500 text-white p-4 rounded flex items-center justify-center space-x-2 hover:bg-yellow-600"
+        >
+          <i data-lucide="calendar" class="w-5 h-5"></i>
+          <span>ขอลางาน</span>
+        </button>
+        <button
+          class="bg-purple-500 text-white p-4 rounded flex items-center justify-center space-x-2 hover:bg-purple-600"
+        >
+          <i data-lucide="file-text" class="w-5 h-5"></i>
+          <span>รายงานการทำงาน</span>
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white p-4 rounded shadow">
+          <h2 class="text-lg font-semibold mb-2">เวลาทำงานวันนี้</h2>
+          <p class="text-2xl font-bold">7 ชั่วโมง 30 นาที</p>
+        </div>
+        <div class="bg-white p-4 rounded shadow">
+          <h2 class="text-lg font-semibold mb-2">เวลาทำงานสัปดาห์นี้</h2>
+          <p class="text-2xl font-bold">32 ชั่วโมง</p>
+        </div>
+        <div class="bg-white p-4 rounded shadow">
+          <h2 class="text-lg font-semibold mb-2">วันลาคงเหลือ</h2>
+          <p class="text-2xl font-bold">10 วัน</p>
+        </div>
+        <div class="bg-white p-4 rounded shadow">
+          <h2 class="text-lg font-semibold mb-2">โปรเจกต์ปัจจุบัน</h2>
+          <p class="text-2xl font-bold">ระบบ HR</p>
+        </div>
+      </div>
+
+      <!-- Recent activities -->
+      <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-lg font-semibold mb-4">กิจกรรมล่าสุด</h2>
+        <ul class="space-y-2">
+          <li class="flex items-center space-x-2">
+            <i data-lucide="clock" class="w-5 h-5 flex-shrink-0"></i>
+            <span>บันทึกเวลาเข้างาน เมื่อ 2 ชั่วโมงที่แล้ว</span>
+          </li>
+          <li class="flex items-center space-x-2">
+            <i data-lucide="file-text" class="w-5 h-5 flex-shrink-0"></i>
+            <span>ส่งรายงานประจำสัปดาห์ เมื่อวานนี้</span>
+          </li>
+          <li class="flex items-center space-x-2">
+            <i data-lucide="calendar" class="w-5 h-5 flex-shrink-0"></i>
+            <span>ขอลาพักร้อน วันที่ 15-17 สิงหาคม</span>
+          </li>
+        </ul>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-200 text-center py-4 text-sm text-gray-600">
+      ©2024 HOMEPLUS STORE CO., LTD. All rights reserved.
+    </footer>
+
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ลงทะเบียน - ระบบบันทึกเวลาทำงาน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Noto Sans Thai", sans-serif;
+      }
+      #termsContent {
+        display: none;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <div class="flex-grow flex items-center justify-center py-12">
+      <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div class="text-center mb-8">
+          <img
+            src="images/DRHPlogo150px.png"
+            alt="โลโก้บริษัท"
+            class="mx-auto mb-4"
+          />
+          <h1 class="text-2xl font-bold text-blue-600">ลงทะเบียน</h1>
+        </div>
+        <form id="registrationForm">
+          <div class="mb-4">
+            <label
+              for="fullname"
+              class="block text-gray-700 text-sm font-bold mb-2"
+              >ชื่อ-นามสกุล</label
+            >
+            <input
+              type="text"
+              id="fullname"
+              name="fullname"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="username"
+              class="block text-gray-700 text-sm font-bold mb-2"
+              >ชื่อผู้ใช้</label
+            >
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="email"
+              class="block text-gray-700 text-sm font-bold mb-2"
+              >อีเมล</label
+            >
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="password"
+              class="block text-gray-700 text-sm font-bold mb-2"
+              >รหัสผ่าน</label
+            >
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div class="mb-6">
+            <label
+              for="confirm_password"
+              class="block text-gray-700 text-sm font-bold mb-2"
+              >ยืนยันรหัสผ่าน</label
+            >
+            <input
+              type="password"
+              id="confirm_password"
+              name="confirm_password"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                id="terms"
+                name="terms"
+                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                required
+              />
+              <label for="terms" class="ml-2 block text-sm text-gray-900">
+                ยอมรับ
+                <a href="#" id="showTerms" class="text-blue-600 hover:underline"
+                  >ข้อตกลงและเงื่อนไข</a
+                >
+              </label>
+            </div>
+          </div>
+          <div id="termsContent" class="mb-6 p-4 border rounded bg-gray-50">
+            <h2 class="text-lg font-bold mb-4">
+              ข้อตกลงและเงื่อนไขการใช้งานระบบบันทึกเวลาทำงาน
+            </h2>
+            <p class="mb-2">1. การยอมรับข้อตกลง</p>
+            <p class="mb-4">
+              โดยการใช้งานระบบบันทึกเวลาทำงานนี้
+              คุณยอมรับที่จะปฏิบัติตามข้อตกลงและเงื่อนไขทั้งหมดที่ระบุไว้ในเอกสารนี้
+            </p>
+            <p class="mb-2">2. การใช้งานระบบ</p>
+            <p class="mb-4">
+              2.1
+              คุณตกลงที่จะใช้ระบบนี้เพื่อวัตถุประสงค์ในการบันทึกเวลาทำงานและกิจกรรมที่เกี่ยวข้องกับงานเท่านั้น
+            </p>
+            <p class="mb-4">
+              2.2
+              คุณรับรองว่าข้อมูลทั้งหมดที่คุณให้ในระหว่างการลงทะเบียนและการใช้งานระบบเป็นความจริง
+              ถูกต้อง และเป็นปัจจุบัน
+            </p>
+            <!-- เพิ่มเนื้อหาข้อตกลงและเงื่อนไขที่เหลือตามที่เราเขียนไว้ก่อนหน้านี้ -->
+          </div>
+          <div class="flex flex-col space-y-4">
+            <button
+              type="submit"
+              class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+            >
+              <a href="registration-success.html">ลงทะเบียน</a>
+            </button>
+            <a
+              href="login-page.html"
+              class="text-center text-sm text-blue-600 hover:underline"
+            >
+              มีบัญชีอยู่แล้ว? เข้าสู่ระบบ
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+    <footer class="bg-gray-200 text-center py-4 text-sm text-gray-600">
+      ©2024 HOMEPLUS STORE CO., LTD. All rights reserved.
+    </footer>
+
+    <script>
+      document
+        .getElementById("showTerms")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          var termsContent = document.getElementById("termsContent");
+          if (
+            termsContent.style.display === "none" ||
+            termsContent.style.display === ""
+          ) {
+            termsContent.style.display = "block";
+          } else {
+            termsContent.style.display = "none";
+          }
+        });
+
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          // ตรวจสอบว่าช่อง "ยอมรับข้อตกลงและเงื่อนไข" ถูกติ๊กหรือไม่
+          if (!document.getElementById("terms").checked) {
+            alert("กรุณายอมรับข้อตกลงและเงื่อนไขก่อนลงทะเบียน");
+            return;
+          }
+          // ตรวจสอบว่ารหัสผ่านและการยืนยันรหัสผ่านตรงกันหรือไม่
+          if (
+            document.getElementById("password").value !==
+            document.getElementById("confirm_password").value
+          ) {
+            alert("รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกัน");
+            return;
+          }
+          // ถ้าทุกอย่างถูกต้อง สามารถส่งข้อมูลไปยังเซิร์ฟเวอร์ได้
+          alert("ลงทะเบียนสำเร็จ!");
+          // ส่วนนี้คุณสามารถเพิ่มโค้ดสำหรับส่งข้อมูลไปยังเซิร์ฟเวอร์ได้
+        });
+    </script>
+  </body>
+</html>
