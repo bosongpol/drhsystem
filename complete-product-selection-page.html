@@ -426,6 +426,166 @@
       // Initialize the page
       renderProductList();
       updateSummary();
+
+      // เพิ่มฟังก์สร้างใบเสนอราคา
+      function createQuotation() {
+        const selectedProducts = getSelectedProducts();
+        if (selectedProducts.length === 0) {
+          alert("กรุณาเลือกสินค้าอย่างน้อย 1 รายการเพื่อสร้างใบเสนอราคา");
+          return;
+        }
+
+        const quotationNumber = generateQuotationNumber();
+        const currentDate = new Date().toLocaleDateString("th-TH", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        let quotationHTML = `
+    <div class="bg-white p-8 rounded-lg shadow-md max-w-2xl mx-auto my-8">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold">ใบเสนอราคา</h1>
+            <p>เลขที่: ${quotationNumber}</p>
+            <p>วันที่: ${currentDate}</p>
+        </div>
+        
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold mb-2">ข้อมูลลูกค้า</h2>
+            <p><strong>ชื่อ:</strong> ${
+              document.getElementById("customerName").textContent
+            }</p>
+            <p><strong>ประเภท:</strong> ${
+              document.getElementById("customerType").textContent
+            }</p>
+            <p><strong>เบอร์โทร:</strong> ${
+              document.getElementById("customerPhone").textContent
+            }</p>
+        </div>
+
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold mb-2">รายการสินค้า</h2>
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="border p-2 text-left">รายการ</th>
+                        <th class="border p-2 text-right">ราคาต่อหน่วย</th>
+                        <th class="border p-2 text-right">จำนวน</th>
+                        <th class="border p-2 text-right">ราคารวม</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+        let total = 0;
+        selectedProducts.forEach((product, index) => {
+          const subtotal = product.price * product.quantity;
+          total += subtotal;
+          quotationHTML += `
+            <tr>
+                <td class="border p-2">${index + 1}. ${product.name}</td>
+                <td class="border p-2 text-right">${product.price.toLocaleString(
+                  "th-TH"
+                )} บาท</td>
+                <td class="border p-2 text-right">${product.quantity}</td>
+                <td class="border p-2 text-right">${subtotal.toLocaleString(
+                  "th-TH"
+                )} บาท</td>
+            </tr>
+        `;
+          if (product.note) {
+            quotationHTML += `
+                <tr>
+                    <td colspan="4" class="border p-2 text-sm italic">หมายเหตุ: ${product.note}</td>
+                </tr>
+            `;
+          }
+        });
+
+        quotationHTML += `
+                </tbody>
+                <tfoot>
+                    <tr class="font-bold">
+                        <td colspan="3" class="border p-2 text-right">ราคารวมทั้งสิ้น</td>
+                        <td class="border p-2 text-right">${total.toLocaleString(
+                          "th-TH"
+                        )} บาท</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="mt-6 text-sm">
+            <p>หมายเหตุ:</p>
+            <ul class="list-disc list-inside">
+                <li>ราคานี้มีผลบังคับใช้เป็นเวลา 30 วัน นับจากวันที่ออกใบเสนอราคา</li>
+                <li>ราคานี้ยังไม่รวมภาษีมูลค่าเพิ่ม 7%</li>
+                <li>การชำระเงิน: ชำระเต็มจำนวนก่อนการจัดส่งสินค้า</li>
+            </ul>
+        </div>
+    </div>
+    `;
+
+        // สร้าง modal สำหรับแสดงใบเสนอราคา
+        const modal = document.createElement("div");
+        modal.className =
+          "fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center";
+        modal.innerHTML = `
+        <div class="bg-white p-4 rounded-lg max-w-2xl max-h-screen overflow-auto">
+            ${quotationHTML}
+            <div class="mt-4 flex justify-end">
+                <button onclick="printQuotation()" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">พิมพ์</button>
+                <button onclick="closeQuotationModal()" class="bg-gray-500 text-white px-4 py-2 rounded">ปิด</button>
+            </div>
+        </div>
+    `;
+
+        document.body.appendChild(modal);
+      }
+
+      function generateQuotationNumber() {
+        // สร้างเลขที่ใบเสนอราคาแบบสุ่ม (ในระบบจริงควรใช้ลอจิกที่ซับซ้อนกว่านี้)
+        return (
+          "QT" +
+          new Date().getFullYear() +
+          Math.floor(Math.random() * 10000)
+            .toString()
+            .padStart(4, "0")
+        );
+      }
+
+      function printQuotation() {
+        window.print();
+      }
+
+      function closeQuotationModal() {
+        const modal = document.querySelector(".fixed.inset-0");
+        if (modal) {
+          modal.remove();
+        }
+      }
+
+      // อย่าลืมเพิ่ม CSS สำหรับการพิมพ์
+      const printStyles = `
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        .bg-white.p-8.rounded-lg.shadow-md.max-w-2xl.mx-auto.my-8, 
+        .bg-white.p-8.rounded-lg.shadow-md.max-w-2xl.mx-auto.my-8 * {
+            visibility: visible;
+        }
+        .bg-white.p-8.rounded-lg.shadow-md.max-w-2xl.mx-auto.my-8 {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+`;
+
+      const styleElement = document.createElement("style");
+      styleElement.textContent = printStyles;
+      document.head.appendChild(styleElement);
     </script>
   </body>
 </html>
