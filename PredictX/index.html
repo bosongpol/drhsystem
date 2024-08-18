@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PredictX DRHP Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+      }
+      code {
+        background-color: #f4f4f4;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <nav class="bg-white shadow-lg">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between">
+          <div class="flex space-x-7">
+            <div>
+              <a href="#" class="flex items-center py-4 px-2">
+                <span class="font-semibold text-gray-500 text-lg"
+                  >Mockup WebApp PredictX DRHP
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3">
+            <a
+              href="inventory-forecast-webapp-mockup.html"
+              class="py-2 px-4 font-medium text-white bg-blue-500 rounded hover:bg-blue-400 transition duration-300 text-lg"
+              >เข้าสู่หน้าแรก</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mx-auto mt-8 px-4">
+      <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div id="content">
+          <h1 id="mockup-webapp-predictx-drhp">Mockup WebApp PredictX DRHP</h1>
+          <h2 id="1-ภาพรวมของ-web-app" class="p-3">1. ภาพรวมของ Web App</h2>
+          <p class="p-3">
+            PredictX DRHP เป็น Web Application
+            สำหรับการจัดการสินค้าคงคลังและการพยากรณ์ยอดขายสำหรับธุรกิจค้าปลีกวัสดุก่อสร้างและอุปกรณ์ตกแต่งบ้าน
+            โดยมีฟีเจอร์หลักดังนี้:
+          </p>
+
+          <li>การแสดงภาพรวมสินค้าคงคลัง</li>
+          <li>การพยากรณ์ยอดขาย</li>
+          <li>การวิเคราะห์ข้อมูลและรายงาน</li>
+          <li>การจัดการรายการสินค้า</li>
+
+          <h2 id="2-โครงสร้างของ-web-app" class="p-3">
+            2. โครงสร้างของ Web App
+          </h2>
+          <p class="p-3">Web App ประกอบด้วยหน้าหลักต่างๆ ดังนี้:</p>
+
+          <li>หน้าหลัก (Dashboard)</li>
+          <li>รายการสินค้าคงคลัง</li>
+          <li>การพยากรณ์</li>
+          <li>รายงานและการวิเคราะห์</li>
+          <li>รายละเอียดสินค้า</li>
+
+          <h2 id="3-ฟีเจอร์สำคัญ" class="p-3">3. ฟีเจอร์สำคัญ</h2>
+          <h3 id="31-dashboard" class="p-3">3.1 Dashboard</h3>
+
+          <li>
+            แสดงข้อมูลสรุปสำคัญ เช่น จำนวนสินค้าคงเหลือ, ความแม่นยำการพยากรณ์,
+            สินค้าใกล้หมด
+          </li>
+          <li>แสดงกราฟแนวโน้มยอดขายล่าสุด</li>
+
+          <h3 id="32-รายการสินค้าคงคลัง" class="p-3">3.2 รายการสินค้าคงคลัง</h3>
+
+          <li>แสดงรายการสินค้าทั้งหมดในคลัง</li>
+          <li>ฟังก์ชันการค้นหาและกรองข้อมูล</li>
+          <li>แสดงสถานะสินค้า เช่น ปกติ, ใกล้หมด, ต่ำกว่าเกณฑ์</li>
+
+          <h3 id="33-การพยากรณ์" class="p-3">3.3 การพยากรณ์</h3>
+
+          <li>แสดงการพยากรณ์ยอดขายในอนาคต</li>
+          <li>วิเคราะห์แนวโน้มและปัจจัยที่มีผลต่อยอดขาย</li>
+          <li>ระบุสินค้าที่ต้องสั่งซื้อเพิ่ม</li>
+
+          <h3 id="34-รายงานและการวิเคราะห์" class="p-3">
+            3.4 รายงานและการวิเคราะห์
+          </h3>
+
+          <li>แสดงข้อมูลสรุปยอดขาย, อัตราการเติบโต, และความแม่นยำการพยากรณ์</li>
+          <li>วิเคราะห์ประสิทธิภาพตามหมวดหมู่สินค้า</li>
+          <li>แสดงรายการสินค้าขายดีและสินค้าที่ต้องเพิ่มสต็อก</li>
+
+          <h3 id="35-รายละเอียดสินค้า" class="p-3">3.5 รายละเอียดสินค้า</h3>
+
+          <li>แสดงข้อมูลเชิงลึกของสินค้าแต่ละรายการ</li>
+          <li>แสดงกราฟแนวโน้มยอดขายและการพยากรณ์</li>
+          <li>ให้คำแนะนำในการจัดการสต็อกและการทำการตลาด</li>
+
+          <h2 id="4-การออกแบบและ-user-interface" class="p-3">
+            4. การออกแบบและ User Interface
+          </h2>
+
+          <li>ใช้ Tailwind CSS ในการจัดรูปแบบหน้าเว็บ</li>
+          <li>มีเมนูหลักด้านบนสำหรับนำทางไปยังหน้าต่างๆ</li>
+          <li>ใช้การ์ดและตารางในการแสดงข้อมูล</li>
+          <li>
+            มีการใช้สีเพื่อแสดงสถานะต่างๆ เช่น สีเขียวสำหรับปกติ,
+            สีเหลืองสำหรับใกล้หมด, สีแดงสำหรับต่ำกว่าเกณฑ์
+          </li>
+
+          <h2 id="5-ข้อเสนอแนะสำหรับการพัฒนาในอนาคต" class="p-3">
+            5. ข้อเสนอแนะสำหรับการพัฒนาในอนาคต
+          </h2>
+
+          <li>
+            เพิ่มฟีเจอร์การแจ้งเตือนอัตโนมัติเมื่อสินค้าใกล้หมดหรือต่ำกว่าเกณฑ์
+          </li>
+          <li>พัฒนาระบบการสั่งซื้อสินค้าอัตโนมัติตามการพยากรณ์</li>
+          <li>
+            เพิ่มการวิเคราะห์ข้อมูลเชิงลึกมากขึ้น เช่น
+            การวิเคราะห์ความสัมพันธ์ของสินค้า (Product Association Analysis)
+          </li>
+          <li>
+            ปรับปรุงประสิทธิภาพการพยากรณ์โดยใช้เทคโนโลยี Machine Learning
+            ที่ซับซ้อนมากขึ้น
+          </li>
+          <li>
+            พัฒนา Mobile Application
+            เพื่อให้ผู้ใช้สามารถเข้าถึงข้อมูลได้สะดวกมากขึ้น
+          </li>
+
+          <h2 id="6-สรุป" class="p-3">6. สรุป</h2>
+          <p class="p-3">
+            PredictX DRHP Web App
+            เวอร์ชันแรกนี้นำเสนอโซลูชันที่ครอบคลุมสำหรับการจัดการสินค้าคงคลังและการพยากรณ์ยอดขาย
+            โดยมีจุดเด่นในการนำเสนอข้อมูลที่เข้าใจง่ายและการให้คำแนะนำที่เป็นประโยชน์ต่อการตัดสินใจทางธุรกิจ
+            การพัฒนาต่อยอดในอนาคตจะช่วยเพิ่มประสิทธิภาพและความสามารถของระบบให้ตอบโจทย์ความต้องการของผู้ใช้งานได้ดียิ่งขึ้น
+          </p>
+        </div>
+
+        <div class="p-3">
+          <hr />
+        </div>
+        <div class="p-3">
+          <p class="p-3">
+            <a href="inventory-forecast-webapp-mockup.html">
+              Designer : SONGPOL SANGSAKOO</a
+            >
+            <br />
+            <a href="inventory-forecast-webapp-mockup.html">
+              Programmer : Nack Naratip deverloper</a
+            >
+          </p>
+
+          <p class="p-3">
+            © 2024 PredicX DRHP. บริษัท โฮมพลัส สโตร์ จำกัด. สงวนลิขสิทธิ์.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PredictX - Reports Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: "Noto Sans Thai", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <nav class="bg-white shadow-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <img
+                class="h-8 w-auto"
+                src="img/DRHPlogo180x94.jpg"
+                alt="PredictX"
+              />
+            </div>
+
+            <!-- Desktop menu -->
+            <div class="hidden sm:ml-6 sm:flex sm:space-x-8" id="desktop-menu">
+              <a
+                href="inventory-forecast-webapp-mockup.html"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+              >
+                หน้าหลัก
+              </a>
+              <a
+                href="inventory-list-page.html"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+              >
+                สินค้าคงคลัง
+              </a>
+              <a
+                href="inventory-projection.html"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+              >
+                การพยากรณ์
+              </a>
+              <a
+                href="analytics.html"
+                class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+              >
+                รายงาน
+              </a>
+            </div>
+          </div>
+
+          <!-- Hamburger menu button for mobile -->
+          <div class="sm:hidden flex items-center">
+            <button
+              type="button"
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+            >
+              <span class="sr-only">Open main menu</span>
+              <!-- Icon when menu is closed -->
+              <svg
+                class="block h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <!-- Icon when menu is open -->
+              <svg
+                class="hidden h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile menu, show/hide based on menu state -->
+      <div class="sm:hidden hidden" id="mobile-menu">
+        <div class="pt-2 pb-3 space-y-1">
+          <a
+            href="#"
+            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            >หน้าหลัก</a
+          >
+          <a
+            href="#"
+            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            >สินค้าคงคลัง</a
+          >
+          <a
+            href="#"
+            class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            >การพยากรณ์</a
+          >
+          <a
+            href="#"
+            class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            >รายงาน</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-6">
+        รายงานและการวิเคราะห์
+      </h1>
+
+      <!-- ตัวกรองและการปรับแต่งรายงาน -->
+      <div class="mb-6 flex flex-wrap gap-4 items-center">
+        <div>
+          <label
+            for="date-range"
+            class="block text-sm font-medium text-gray-700"
+            >ช่วงเวลา</label
+          >
+          <select
+            id="date-range"
+            name="date-range"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option>7 วันล่าสุด</option>
+            <option>30 วันล่าสุด</option>
+            <option>3 เดือนล่าสุด</option>
+            <option>1 ปีล่าสุด</option>
+          </select>
+        </div>
+        <div>
+          <label for="category" class="block text-sm font-medium text-gray-700"
+            >หมวดหมู่สินค้า</label
+          >
+          <select
+            id="category"
+            name="category"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option>ทั้งหมด</option>
+            <option>วัสดุก่อสร้าง</option>
+            <option>เครื่องมือช่าง</option>
+            <option>สุขภัณฑ์</option>
+            <option>เฟอร์นิเจอร์</option>
+          </select>
+        </div>
+        <button
+          class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 mt-5"
+        >
+          อัปเดตรายงาน
+        </button>
+      </div>
+
+      <!-- ภาพรวมประสิทธิภาพ -->
+      <div class="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="p-5">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                <svg
+                  class="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <dt class="text-sm font-medium text-gray-500 truncate">
+                    ยอดขายรวม
+                  </dt>
+                  <dd class="text-2xl font-semibold text-gray-900">
+                    ฿15,300,000
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="p-5">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
+                <svg
+                  class="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                  />
+                </svg>
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <dt class="text-sm font-medium text-gray-500 truncate">
+                    อัตราการเติบโต
+                  </dt>
+                  <dd class="text-2xl font-semibold text-gray-900">+12.5%</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="p-5">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 bg-yellow-500 rounded-md p-3">
+                <svg
+                  class="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                  />
+                </svg>
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <dt class="text-sm font-medium text-gray-500 truncate">
+                    ความแม่นยำการพยากรณ์
+                  </dt>
+                  <dd class="text-2xl font-semibold text-gray-900">92.7%</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="p-5">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 bg-red-500 rounded-md p-3">
+                <svg
+                  class="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <dt class="text-sm font-medium text-gray-500 truncate">
+                    สินค้าที่ต้องสั่งซื้อเพิ่ม
+                  </dt>
+                  <dd class="text-2xl font-semibold text-gray-900">
+                    23 รายการ
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- แนวโน้มยอดขาย -->
+      <div class="bg-white p-6 rounded-lg shadow mb-8">
+        <h2 class="text-xl font-semibold mb-4">แนวโน้มยอดขาย</h2>
+        <canvas id="salesTrendChart"></canvas>
+      </div>
+
+      <!-- รายงานสินค้าขายดี และ สินค้าที่ต้องเพิ่มสต็อก -->
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 mb-8">
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h2 class="text-xl font-semibold mb-4">สินค้าขายดี</h2>
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  สินค้า
+                </th>
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  ยอดขาย
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr>
+                <td
+                  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                >
+                  ปูนซีเมนต์ตราเสือ 50 กก.
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  2,500 ถุง
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                >
+                  กระเบื้องปูพื้น 60x60 ซม. สีเทา
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  1,800 ตร.ม.
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                >
+                  สีทาภายนอก สีขาว 5 แกลลอน
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  1,200 ถัง
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h2 class="text-xl font-semibold mb-4">สินค้าที่ต้องเพิ่มสต็อก</h2>
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  สินค้า
+                </th>
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  สต็อกคงเหลือ
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr>
+                <td
+                  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                >
+                  ท่อ PVC 4 นิ้ว
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  50 ท่อน
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                >
+                  สายไฟ VCT 2x1.5 ตร.มม.
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  200 เมตร
+                </td>
+              </tr>
+              <tr>
+                <td
+                  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                >
+                  กระเบื้องมุงหลังคา สีแดง
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  500 แผ่น
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- การวิเคราะห์ตามหมวดหมู่สินค้า -->
+      <div class="bg-white p-6 rounded-lg shadow mb-8">
+        <h2 class="text-xl font-semibold mb-4">
+          การวิเคราะห์ตามหมวดหมู่สินค้า
+        </h2>
+        <canvas id="categorySalesChart"></canvas>
+      </div>
+
+      <!-- ประสิทธิภาพการพยากรณ์ -->
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">ประสิทธิภาพการพยากรณ์</h2>
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                หมวดหมู่
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                ความแม่นยำ
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                แนวโน้ม
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+              >
+                วัสดุก่อสร้าง
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                95.2%
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500">
+                ↑ 2.1%
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+              >
+                เครื่องมือช่าง
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                91.8%
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-red-500">
+                ↓ 0.5%
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+              >
+                สุขภัณฑ์
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                93.5%
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500">
+                ↑ 1.2%
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+              >
+                เฟอร์นิเจอร์
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                89.7%
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500">
+                ↑ 3.4%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer class="bg-gray-800 mt-12">
+      <!-- (ใส่ footer ที่เหมือนกับหน้าอื่นๆ) -->
+
+      <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div>
+            <h3
+              class="text-sm font-semibold text-gray-400 tracking-wider uppercase"
+            >
+              เกี่ยวกับเรา
+            </h3>
+            <ul class="mt-4 space-y-4">
+              <li>
+                <a href="#" class="text-base text-gray-300 hover:text-white"
+                  >บริษัทของเรา</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-base text-gray-300 hover:text-white"
+                  >ทีมงาน</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3
+              class="text-sm font-semibold text-gray-400 tracking-wider uppercase"
+            >
+              บริการ
+            </h3>
+            <ul class="mt-4 space-y-4">
+              <li>
+                <a href="#" class="text-base text-gray-300 hover:text-white"
+                  >การพยากรณ์สินค้า</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-base text-gray-300 hover:text-white"
+                  >การจัดการคลังสินค้า</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3
+              class="text-sm font-semibold text-gray-400 tracking-wider uppercase"
+            >
+              ความช่วยเหลือ
+            </h3>
+            <ul class="mt-4 space-y-4">
+              <li>
+                <a href="#" class="text-base text-gray-300 hover:text-white"
+                  >คำถามที่พบบ่อย</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-base text-gray-300 hover:text-white"
+                  >ติดต่อเรา</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3
+              class="text-sm font-semibold text-gray-400 tracking-wider uppercase"
+            >
+              ติดตามเรา
+            </h3>
+            <ul class="mt-4 space-y-4">
+              <li>
+                <a href="#" class="text-base text-gray-300 hover:text-white"
+                  >Facebook</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-base text-gray-300 hover:text-white"
+                  >Twitter</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="mt-8 border-t border-gray-700 pt-8 md:flex md:items-center md:justify-between"
+        >
+          <div class="flex space-x-6 md:order-2">
+            <a href="#" class="text-gray-400 hover:text-gray-300">
+              <span class="sr-only">Facebook</span>
+              <svg
+                class="h-6 w-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-gray-300">
+              <span class="sr-only">Twitter</span>
+              <svg
+                class="h-6 w-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"
+                />
+              </svg>
+            </a>
+          </div>
+          <p class="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
+            &copy; 2024 PredictX DRHP. บริษัท โฮมพลัส สโตร์ จำกัด.
+            สงวนลิขสิทธิ์.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // แนวโน้มยอดขาย
+        var salesTrendCtx = document
+          .getElementById("salesTrendChart")
+          .getContext("2d");
+        var salesTrendChart = new Chart(salesTrendCtx, {
+          type: "line",
+          data: {
+            labels: [
+              "ม.ค.",
+              "ก.พ.",
+              "มี.ค.",
+              "เม.ย.",
+              "พ.ค.",
+              "มิ.ย.",
+              "ก.ค.",
+              "ส.ค.",
+              "ก.ย.",
+              "ต.ค.",
+              "พ.ย.",
+              "ธ.ค.",
+            ],
+            datasets: [
+              {
+                label: "ยอดขาย (ล้านบาท)",
+                data: [12, 19, 3, 5, 2, 3, 10, 15, 20, 25, 20, 18],
+                borderColor: "rgb(75, 192, 192)",
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: "แนวโน้มยอดขายรายเดือน",
+              },
+            },
+          },
+        });
+
+        // การวิเคราะห์ตามหมวดหมู่สินค้า
+        var categorySalesCtx = document
+          .getElementById("categorySalesChart")
+          .getContext("2d");
+        var categorySalesChart = new Chart(categorySalesCtx, {
+          type: "pie",
+          data: {
+            labels: [
+              "วัสดุก่อสร้าง",
+              "เครื่องมือช่าง",
+              "สุขภัณฑ์",
+              "เฟอร์นิเจอร์",
+            ],
+            datasets: [
+              {
+                data: [300, 50, 100, 80],
+                backgroundColor: [
+                  "rgb(255, 99, 132)",
+                  "rgb(54, 162, 235)",
+                  "rgb(255, 205, 86)",
+                  "rgb(75, 192, 192)",
+                ],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top",
+              },
+              title: {
+                display: true,
+                text: "สัดส่วนยอดขายตามหมวดหมู่สินค้า",
+              },
+            },
+          },
+        });
+
+        // ตัวอย่างการอัปเดตข้อมูลเมื่อเลือกช่วงเวลาหรือหมวดหมู่
+        document
+          .getElementById("date-range")
+          .addEventListener("change", updateCharts);
+        document
+          .getElementById("category")
+          .addEventListener("change", updateCharts);
+
+        function updateCharts() {
+          // ในที่นี้คุณจะเชื่อมต่อกับ API เพื่อดึงข้อมูลจริงและอัปเดตกราฟ
+          console.log("Updating charts with new data...");
+        }
+      });
+    </script>
+  </body>
+</html>
