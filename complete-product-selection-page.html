@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>เลือกสินค้าสำหรับลูกค้า</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Noto Sans Thai", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <header class="bg-blue-900 text-white py-4">
+      <div
+        class="container mx-auto flex justify-between items-center px-4 md:px-8"
+      >
+        <div>
+          <img src="images/logowhite.png" alt="DRHP Logo" class="h-10" />
+        </div>
+        <nav class="hidden md:block">
+          <a href="#" class="hover:text-gray-300 mx-2">หน้าแรก</a>
+          <a href="#" class="hover:text-gray-300 mx-2">รายชื่อ</a>
+          <a href="#" class="hover:text-gray-300 mx-2">จัดการสินค้า</a>
+          <a href="#" class="hover:text-gray-300 mx-2">Hello, BO</a>
+          <a href="#" class="text-red-400 hover:text-red-600 mx-2"
+            >ออกจากระบบ</a
+          >
+        </nav>
+        <button class="md:hidden">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="container mx-auto mt-6 px-4 md:px-8">
+      <h1 class="text-xl font-semibold mb-6 text-center">
+        ระบบเลือกสินค้าสำหรับพนักงานขาย
+      </h1>
+      <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+        <h2 class="text-lg font-semibold mb-2">ข้อมูลลูกค้า</h2>
+        <div id="customerInfo" class="grid grid-cols-2 gap-4">
+          <p>
+            <strong>ชื่อ:</strong> <span id="customerName">คุณสมชาย ใจดี</span>
+          </p>
+          <p><strong>ประเภท:</strong> <span id="customerType">VIP</span></p>
+          <p>
+            <strong>เบอร์โทร:</strong>
+            <span id="customerPhone">081-234-5678</span>
+          </p>
+          <p>
+            <strong>ยอดซื้อสะสม:</strong>
+            <span id="customerTotal">150,000 บาท</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">รายการสินค้า</h2>
+          <div>
+            <input
+              type="text"
+              id="searchProduct"
+              placeholder="ค้นหาสินค้า"
+              class="border rounded p-2"
+            />
+            <select id="categoryFilter" class="border rounded p-2 ml-2">
+              <option value="">ทุกหมวดหมู่</option>
+              <option value="เครื่องใช้ไฟฟ้า">เครื่องใช้ไฟฟ้า</option>
+              <option value="อิเล็กทรอนิกส์">อิเล็กทรอนิกส์</option>
+              <option value="เฟอร์นิเจอร์">เฟอร์นิเจอร์</option>
+            </select>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-gray-200">
+                <th class="p-2">เลือก</th>
+                <th class="p-2">รูปภาพ</th>
+                <th class="p-2">รหัสสินค้า</th>
+                <th class="p-2">ชื่อสินค้า</th>
+                <th class="p-2">ราคา</th>
+                <th class="p-2">จำนวน</th>
+                <th class="p-2">สถานะ</th>
+                <th class="p-2">หมายเหตุ</th>
+              </tr>
+            </thead>
+            <tbody id="productList">
+              <!-- Product rows will be dynamically added here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-2">สรุปรายการ</h2>
+        <div class="flex justify-between items-center">
+          <p>จำนวนสินค้าที่เลือก: <span id="selectedCount">0</span> รายการ</p>
+          <p>ราคารวม: <span id="totalPrice">0</span> บาท</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-between items-center mb-4">
+        <div class="flex flex-wrap gap-2">
+          <button
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            onclick="downloadFile('excel')"
+          >
+            <i class="fas fa-file-excel mr-2"></i>ดาวน์โหลด Excel
+          </button>
+          <button
+            class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            onclick="downloadFile('pdf')"
+          >
+            <i class="fas fa-file-pdf mr-2"></i>ดาวน์โหลด PDF
+          </button>
+          <button
+            class="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-500"
+            onclick="shareToApp('line')"
+          >
+            <i class="fab fa-line mr-2"></i>แชร์ Line
+          </button>
+          <button
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            onclick="shareToApp('facebook')"
+          >
+            <i class="fab fa-facebook-f mr-2"></i>แชร์ Facebook
+          </button>
+        </div>
+        <button
+          class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+          onclick="createQuotation()"
+        >
+          <i class="fas fa-file-invoice mr-2"></i>สร้างใบเสนอราคา
+        </button>
+      </div>
+    </main>
+
+    <footer class="bg-gray-200 py-4 mt-8">
+      <div class="container mx-auto text-center">
+        <p>© 2024 HOMEPLUS STORE CO., LTD. All rights reserved.</p>
+        <div class="mt-2">
+          <a href="#" class="text-blue-500 hover:text-blue-700 mx-2"
+            >นโยบายความเป็นส่วนตัว</a
+          >
+          <a href="#" class="text-blue-500 hover:text-blue-700 mx-2"
+            >ข้อกำหนดการใช้งาน</a
+          >
+          <a href="#" class="text-blue-500 hover:text-blue-700 mx-2"
+            >ติดต่อเรา</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Sample product data
+      const products = [
+        {
+          id: "61-101012",
+          name: "ELECTROLUX เครื่องทำน้ำอุ่น EW351 PX-DWX5 ขาว",
+          price: 3690,
+          image: "images/DRHPlogo180x94.jpg",
+          category: "เครื่องใช้ไฟฟ้า",
+          status: "พร้อมจำหน่าย",
+        },
+        {
+          id: "62-202023",
+          name: "SAMSUNG สมาร์ทโฟน Galaxy A34 5G",
+          price: 9990,
+          image: "images/DRHPlogo180x94.jpg",
+          category: "อิเล็กทรอนิกส์",
+          status: "สั่งจอง",
+        },
+        {
+          id: "63-303034",
+          name: "ACER โน้ตบุ๊ค Aspire 3 A315-59-59AT",
+          price: 15990,
+          image: "images/DRHPlogo180x94.jpg",
+          category: "อิเล็กทรอนิกส์",
+          status: "พร้อมจำหน่าย",
+        },
+        {
+          id: "64-404045",
+          name: "WARRIX เสื้อฟุตบอลทีมชาติไทย 2023 เหย้า",
+          price: 990,
+          image: "images/DRHPlogo180x94.jpg",
+          category: "เสื้อผ้า",
+          status: "พร้อมจำหน่าย",
+        },
+        {
+          id: "65-505056",
+          name: "ADDA รองเท้าแตะ รุ่น 2N36-M1",
+          price: 199,
+          image: "images/DRHPlogo180x94.jpg",
+          category: "รองเท้า",
+          status: "หมดสต็อก",
+        },
+      ];
+
+      // Function to render product list
+      function renderProductList() {
+        const productList = document.getElementById("productList");
+        productList.innerHTML = "";
+        products.forEach((product) => {
+          const row = `
+                    <tr>
+                        <td class="p-2"><input type="checkbox" class="product-select" data-id="${product.id}"></td>
+                        <td class="p-2"><img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover"></td>
+                        <td class="p-2">${product.id}</td>
+                        <td class="p-2">${product.name}</td>
+                        <td class="p-2">${product.price} บาท</td>
+                        <td class="p-2"><input type="number" min="1" value="1" class="w-16 border rounded p-1 product-quantity" data-id="${product.id}"></td>
+                        <td class="p-2">${product.status}</td>
+                        <td class="p-2"><input type="text" class="border rounded p-1 product-note" data-id="${product.id}" placeholder="หมายเหตุ"></td>
+                    </tr>
+                `;
+          productList.innerHTML += row;
+        });
+        addEventListeners();
+      }
+
+      // Function to add event listeners
+      function addEventListeners() {
+        document.querySelectorAll(".product-select").forEach((checkbox) => {
+          checkbox.addEventListener("change", updateSummary);
+        });
+        document.querySelectorAll(".product-quantity").forEach((input) => {
+          input.addEventListener("change", updateSummary);
+        });
+        document
+          .getElementById("searchProduct")
+          .addEventListener("input", filterProducts);
+        document
+          .getElementById("categoryFilter")
+          .addEventListener("change", filterProducts);
+      }
+
+      // Function to update summary
+      function updateSummary() {
+        const selectedProducts = getSelectedProducts();
+        document.getElementById("selectedCount").textContent =
+          selectedProducts.length;
+        const totalPrice = selectedProducts.reduce(
+          (total, product) => total + product.price * product.quantity,
+          0
+        );
+        document.getElementById("totalPrice").textContent =
+          totalPrice.toLocaleString("th-TH");
+      }
+
+      // Function to get selected products
+      function getSelectedProducts() {
+        const selectedProducts = [];
+        document
+          .querySelectorAll(".product-select:checked")
+          .forEach((checkbox) => {
+            const productId = checkbox.getAttribute("data-id");
+            const product = products.find((p) => p.id === productId);
+            const quantity = parseInt(
+              document.querySelector(
+                `.product-quantity[data-id="${productId}"]`
+              ).value
+            );
+            const note = document.querySelector(
+              `.product-note[data-id="${productId}"]`
+            ).value;
+            selectedProducts.push({ ...product, quantity, note });
+          });
+        return selectedProducts;
+      }
+
+      // Function to filter products
+      function filterProducts() {
+        const searchTerm = document
+          .getElementById("searchProduct")
+          .value.toLowerCase();
+        const category = document.getElementById("categoryFilter").value;
+        const filteredProducts = products.filter(
+          (product) =>
+            (product.name.toLowerCase().includes(searchTerm) ||
+              product.id.includes(searchTerm)) &&
+            (category === "" || product.category === category)
+        );
+        renderFilteredProducts(filteredProducts);
+      }
+
+      // Function to render filtered products
+      function renderFilteredProducts(filteredProducts) {
+        const productList = document.getElementById("productList");
+        productList.innerHTML = "";
+        filteredProducts.forEach((product) => {
+          const row = `
+                    <tr>
+                        <td class="p-2"><input type="checkbox" class="product-select" data-id="${product.id}"></td>
+                        <td class="p-2"><img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover"></td>
+                        <td class="p-2">${product.id}</td>
+                        <td class="p-2">${product.name}</td>
+                        <td class="p-2">${product.price} บาท</td>
+                        <td class="p-2"><input type="number" min="1" value="1" class="w-16 border rounded p-1 product-quantity" data-id="${product.id}"></td>
+                        <td class="p-2">${product.status}</td>
+                        <td class="p-2"><input type="text" class="border rounded p-1 product-note" data-id="${product.id}" placeholder="หมายเหตุ"></td>
+                    </tr>
+                `;
+          productList.innerHTML += row;
+        });
+        addEventListeners();
+      }
+
+      // Function to download file (Excel or PDF)
+      function downloadFile(fileType) {
+        const selectedProducts = getSelectedProducts();
+        if (selectedProducts.length === 0) {
+          alert("กรุณาเลือกสินค้าอย่างน้อย 1 รายการ");
+          return;
+        }
+
+        let fileName = "";
+        let fileContent = "";
+
+        if (fileType === "excel") {
+          fileName = "รายการสินค้า.xlsx";
+          fileContent = "รหัสสินค้า,ชื่อสินค้า,ราคา,จำนวน,หมายเหตุ\n";
+          selectedProducts.forEach((product) => {
+            fileContent += `${product.id},${product.name},${product.price},${product.quantity},${product.note}\n`;
+          });
+        } else if (fileType === "pdf") {
+          fileName = "รายการสินค้า.pdf";
+          fileContent = "รายการสินค้าที่เลือก:\n\n";
+          selectedProducts.forEach((product) => {
+            fileContent += `${product.id} - ${product.name} (${product.price} บาท) x ${product.quantity}\n`;
+            if (product.note) fileContent += `หมายเหตุ: ${product.note}\n`;
+            fileContent += "\n";
+          });
+        }
+
+        const blob = new Blob([fileContent], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+      }
+
+      // Function to share to app (Line or Facebook)
+      function shareToApp(app) {
+        const selectedProducts = getSelectedProducts();
+        if (selectedProducts.length === 0) {
+          alert("กรุณาเลือกสินค้าอย่างน้อย 1 รายการ");
+          return;
+        }
+
+        let shareText = "รายการสินค้าที่เลือก:\n\n";
+        selectedProducts.forEach((product) => {
+          shareText += `${product.name} - ${product.price} บาท (${product.quantity} ชิ้น)\n`;
+          if (product.note) shareText += `หมายเหตุ: ${product.note}\n`;
+          shareText += "\n";
+        });
+
+        if (app === "line") {
+          alert(`กำลังแชร์ไปยัง Line:\n${shareText}`);
+          // ในการใช้งานจริง คุณจะต้องใช้ Line SDK หรือ API เพื่อแชร์ข้อมูล
+        } else if (app === "facebook") {
+          alert(`กำลังแชร์ไปยัง Facebook:\n${shareText}`);
+          // ในการใช้งานจริง คุณจะต้องใช้ Facebook SDK หรือ API เพื่อแชร์ข้อมูล
+        }
+      }
+
+      // Function to create quotation
+      function createQuotation() {
+        const selectedProducts = getSelectedProducts();
+        if (selectedProducts.length === 0) {
+          alert("กรุณาเลือกสินค้าอย่างน้อย 1 รายการเพื่อสร้างใบเสนอราคา");
+          return;
+        }
+
+        let quotationContent = `ใบเสนอราคา\n\n`;
+        quotationContent += `ลูกค้า: ${
+          document.getElementById("customerName").textContent
+        }\n`;
+        quotationContent += `ประเภทลูกค้า: ${
+          document.getElementById("customerType").textContent
+        }\n`;
+        quotationContent += `เบอร์โทร: ${
+          document.getElementById("customerPhone").textContent
+        }\n\n`;
+        quotationContent += `รายการสินค้า:\n`;
+
+        let total = 0;
+        selectedProducts.forEach((product) => {
+          const subtotal = product.price * product.quantity;
+          quotationContent += `${product.name} - ${product.price} บาท x ${product.quantity} = ${subtotal} บาท\n`;
+          if (product.note) quotationContent += `  หมายเหตุ: ${product.note}\n`;
+          total += subtotal;
+        });
+
+        quotationContent += `\nราคารวมทั้งสิ้น: ${total} บาท`;
+
+        alert(quotationContent);
+        // ในการใช้งานจริง คุณอาจต้องการบันทึกใบเสนอราคานี้ลงในฐานข้อมูลหรือส่งไปยังระบบอื่นๆ
+      }
+
+      // Initialize the page
+      renderProductList();
+      updateSummary();
+    </script>
+  </body>
+</html>
