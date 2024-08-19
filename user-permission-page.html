@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>จัดการสิทธิ์ผู้ใช้งาน</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Noto Sans Thai", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <header class="bg-blue-900 text-white py-4">
+      <div
+        class="container mx-auto flex justify-between items-center px-4 md:px-8"
+      >
+        <div>
+          <img src="images/logowhite.png" alt="DRHP Logo" class="h-10" />
+        </div>
+        <nav class="hidden md:block">
+          <a href="#" class="hover:text-gray-300 mx-2">หน้าแรก</a>
+          <a href="#" class="hover:text-gray-300 mx-2">รายชื่อ</a>
+          <a href="#" class="hover:text-gray-300 mx-2">จัดการสินค้า</a>
+          <a href="#" class="hover:text-gray-300 mx-2" id="loggedInUserInfo">
+            <i class="fas fa-user-shield mr-2"></i
+            ><span id="loggedInUsername">Super Admin</span>
+          </a>
+          <a href="#" class="text-red-400 hover:text-red-600 mx-2"
+            >ออกจากระบบ</a
+          >
+        </nav>
+        <button class="md:hidden">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="container mx-auto mt-6 px-4 md:px-8">
+      <h1 class="text-2xl font-bold mb-4">จัดการสิทธิ์ผู้ใช้งาน</h1>
+
+      <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-2">สถานะผู้ใช้งานปัจจุบัน</h2>
+        <div id="currentUserStatus" class="flex items-center">
+          <img src="images/600x600.png" alt="" class="h-20 mr-4" />
+          <div>
+            <p>
+              <strong>ชื่อผู้ใช้:</strong>
+              <span id="currentUsername">Super Admin</span>
+            </p>
+            <p>
+              <strong>บทบาท:</strong>
+              <span id="currentUserRole">ผู้ดูแลระบบสูงสุด</span>
+            </p>
+            <p>
+              <strong>สิทธิ์:</strong>
+              <span id="currentUserPermissions"
+                >จัดการผู้ใช้, กำหนดสิทธิ์, จัดการระบบ</span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">รายชื่อผู้ใช้งาน</h2>
+          <div>
+            <input
+              type="text"
+              id="searchUser"
+              placeholder="ค้นหาผู้ใช้งาน"
+              class="border rounded p-2"
+            />
+            <button
+              onclick="showAddUserModal()"
+              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 ml-2"
+            >
+              <i class="fas fa-user-plus mr-2"></i>เพิ่มผู้ใช้งาน
+            </button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-gray-200">
+                <th class="p-2 text-left">ชื่อผู้ใช้</th>
+                <th class="p-2 text-left">อีเมล</th>
+                <th class="p-2 text-left">บทบาท</th>
+                <th class="p-2 text-left">สถานะ</th>
+                <th class="p-2 text-left">การดำเนินการ</th>
+              </tr>
+            </thead>
+            <tbody id="userList">
+              <!-- User rows will be dynamically added here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-2">สรุป</h2>
+        <div class="flex justify-between items-center">
+          <p>จำนวนผู้ใช้งานทั้งหมด: <span id="totalUsers">0</span> คน</p>
+          <p>ผู้ใช้งานที่เปิดใช้งาน: <span id="activeUsers">0</span> คน</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-gray-200 py-4 mt-8">
+      <div class="container mx-auto text-center">
+        <p>© 2024 HOMEPLUS STORE CO., LTD. All rights reserved.</p>
+        <div class="mt-2">
+          <a href="#" class="text-blue-500 hover:text-blue-700 mx-2"
+            >นโยบายความเป็นส่วนตัว</a
+          >
+          <a href="#" class="text-blue-500 hover:text-blue-700 mx-2"
+            >ข้อกำหนดการใช้งาน</a
+          >
+          <a href="#" class="text-blue-500 hover:text-blue-700 mx-2"
+            >ติดต่อเรา</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- Modal for adding/editing user -->
+    <div
+      id="userModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center"
+    >
+      <div class="bg-white p-6 rounded-lg max-w-md w-full">
+        <h2 id="modalTitle" class="text-xl font-semibold mb-4">
+          เพิ่มผู้ใช้งาน
+        </h2>
+        <form id="userForm">
+          <div class="mb-4">
+            <label for="username" class="block mb-2">ชื่อผู้ใช้:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              required
+              class="w-full border rounded p-2"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="email" class="block mb-2">อีเมล:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="w-full border rounded p-2"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="role" class="block mb-2">บทบาท:</label>
+            <select
+              id="role"
+              name="role"
+              required
+              class="w-full border rounded p-2"
+            >
+              <option value="admin">ผู้ดูแลระบบ</option>
+              <option value="manager">ผู้จัดการ</option>
+              <option value="user">ผู้ใช้งานทั่วไป</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label for="status" class="block mb-2">สถานะ:</label>
+            <select
+              id="status"
+              name="status"
+              required
+              class="w-full border rounded p-2"
+            >
+              <option value="active">เปิดใช้งาน</option>
+              <option value="inactive">ปิดใช้งาน</option>
+            </select>
+          </div>
+          <div class="flex justify-end">
+            <button
+              type="button"
+              onclick="closeUserModal()"
+              class="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+            >
+              ยกเลิก
+            </button>
+            <button
+              type="submit"
+              class="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              บันทึก
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Sample user data
+      let users = [
+        {
+          id: 1,
+          username: "admin",
+          email: "admin@example.com",
+          role: "admin",
+          status: "active",
+        },
+        {
+          id: 2,
+          username: "manager1",
+          email: "manager1@example.com",
+          role: "manager",
+          status: "active",
+        },
+        {
+          id: 3,
+          username: "user1",
+          email: "user1@example.com",
+          role: "user",
+          status: "inactive",
+        },
+      ];
+
+      // ข้อมูลผู้ใช้ที่ล็อกอิน (จำลอง)
+      const loggedInUser = {
+        username: "Super Admin",
+        role: "superadmin",
+        permissions: ["manage_users", "assign_permissions", "manage_system"],
+      };
+
+      // Function to render user list
+      function renderUserList() {
+        const userList = document.getElementById("userList");
+        userList.innerHTML = "";
+        users.forEach((user) => {
+          const row = `
+                    <tr>
+                        <td class="p-2">${user.username}</td>
+                        <td class="p-2">${user.email}</td>
+                        <td class="p-2">${translateRole(user.role)}</td>
+                        <td class="p-2">${translateStatus(user.status)}</td>
+                        <td class="p-2">
+                            <button onclick="editUser(${
+                              user.id
+                            })" class="text-blue-500 hover:text-blue-700 mr-2">
+                                <i class="fas fa-edit"></i> แก้ไข
+                            </button>
+                            <button onclick="deleteUser(${
+                              user.id
+                            })" class="text-red-500 hover:text-red-700">
+                                <i class="fas fa-trash"></i> ลบ
+                            </button>
+                        </td>
+                    </tr>
+                `;
+          userList.innerHTML += row;
+        });
+        updateSummary();
+      }
+
+      // Function to translate role to Thai
+      function translateRole(role) {
+        const roleMap = {
+          superadmin: "ผู้ดูแลระบบสูงสุด",
+          admin: "ผู้ดูแลระบบ",
+          manager: "ผู้จัดการ",
+          user: "ผู้ใช้งานทั่วไป",
+        };
+        return roleMap[role] || role;
+      }
+
+      // Function to translate status to Thai
+      function translateStatus(status) {
+        return status === "active" ? "เปิดใช้งาน" : "ปิดใช้งาน";
+      }
+
+      // Function to show add user modal
+      function showAddUserModal() {
+        document.getElementById("modalTitle").textContent = "เพิ่มผู้ใช้งาน";
+        document.getElementById("userForm").reset();
+        document.getElementById("userModal").classList.remove("hidden");
+        document.getElementById("userModal").classList.add("flex");
+      }
+
+      // Function to close user modal
+      function closeUserModal() {
+        document.getElementById("userModal").classList.add("hidden");
+        document.getElementById("userModal").classList.remove("flex");
+      }
+
+      // Function to edit user
+      function editUser(userId) {
+        const user = users.find((u) => u.id === userId);
+        if (user) {
+          document.getElementById("modalTitle").textContent = "แก้ไขผู้ใช้งาน";
+          document.getElementById("username").value = user.username;
+          document.getElementById("email").value = user.email;
+          document.getElementById("role").value = user.role;
+          document.getElementById("status").value = user.status;
+          document.getElementById("userModal").classList.remove("hidden");
+          document.getElementById("userModal").classList.add("flex");
+        }
+      }
+
+      // Function to delete user
+      function deleteUser(userId) {
+        if (confirm("คุณแน่ใจหรือไม่ที่จะลบผู้ใช้งานนี้?")) {
+          users = users.filter((user) => user.id !== userId);
+          renderUserList();
+        }
+      }
+
+      // Function to update summary
+      function updateSummary() {
+        document.getElementById("totalUsers").textContent = users.length;
+        const activeUsers = users.filter(
+          (user) => user.status === "active"
+        ).length;
+        document.getElementById("activeUsers").textContent = activeUsers;
+      }
+
+      // Event listener for user form submission
+      document
+        .getElementById("userForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const userData = Object.fromEntries(formData.entries());
+
+          if (
+            document.getElementById("modalTitle").textContent ===
+            "เพิ่มผู้ใช้งาน"
+          ) {
+            userData.id = users.length + 1;
+            users.push(userData);
+          } else {
+            const editedUserId = users.findIndex(
+              (u) => u.username === userData.username
+            );
+            if (editedUserId !== -1) {
+              users[editedUserId] = { ...users[editedUserId], ...userData };
+            }
+          }
+
+          renderUserList();
+          closeUserModal();
+        });
+
+      // Search functionality
+      document
+        .getElementById("searchUser")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          const filteredUsers = users.filter(
+            (user) =>
+              user.username.toLowerCase().includes(searchTerm) ||
+              user.email.toLowerCase().includes(searchTerm) ||
+              translateRole(user.role).toLowerCase().includes(searchTerm)
+          );
+          renderFilteredUsers(filteredUsers);
+        });
+
+      // Function to render filtered users
+      function renderFilteredUsers(filteredUsers) {
+        const userList = document.getElementById("userList");
+        userList.innerHTML = "";
+        filteredUsers.forEach((user) => {
+          const row = `
+                    <tr>
+                        <td class="p-2">${user.username}</td>
+                        <td class="p-2">${user.email}</td>
+                        <td class="p-2">${translateRole(user.role)}</td>
+                        <td class="p-2">${translateStatus(user.status)}</td>
+                        <td class="p-2">
+                            <button onclick="editUser(${
+                              user.id
+                            })" class="text-blue-500 hover:text-blue-700 mr-2">
+                                <i class="fas fa-edit"></i> แก้ไข
+                            </button>
+                            <button onclick="deleteUser(${
+                              user.id
+                            })" class="text-red-500 hover:text-red-700">
+                                <i class="fas fa-trash"></i> ลบ
+                            </button>
+                        </td>
+                    </tr>
+                `;
+          userList.innerHTML += row;
+        });
+      }
+
+      // Function to display logged-in user info
+      function displayLoggedInUserInfo() {
+        document.getElementById("loggedInUsername").textContent =
+          loggedInUser.username;
+        document.getElementById("currentUsername").textContent =
+          loggedInUser.username;
+        document.getElementById("currentUserRole").textContent = translateRole(
+          loggedInUser.role
+        );
+        document.getElementById("currentUserPermissions").textContent =
+          loggedInUser.permissions.join(", ");
+      }
+
+      // Initialize the page
+      window.addEventListener("load", function () {
+        displayLoggedInUserInfo();
+        renderUserList();
+      });
+    </script>
+  </body>
+</html>
