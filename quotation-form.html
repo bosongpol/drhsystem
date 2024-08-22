@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>ใบเสนอราคา - HOME PLUS</title>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans Thai', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="max-w-4xl mx-auto p-6 bg-white shadow-md mt-10 rounded-2xl">
+        <div class="flex justify-between items-start mb-6">
+            <div class="flex items-start">
+                <img src="images/DRHPlogo180x94.jpg" alt="HOME PLUS Logo" class="w-24 mr-4">
+                <div>
+                    <div class="text-2xl font-bold text-blue-800">บริษัท โฮมพลัส สโตร์ จำกัด</div>
+                    <p class="text-sm mt-1">136 ม.21 ต.หัวขวาง อ.โกสุมพิสัย จ.มหาสารคาม 44140</p>
+                    <p class="text-sm">โทรศัพท์ 043-761599</p>
+                    <p class="text-sm">เลขที่ผู้เสียภาษี TAX ID 0445563000792</p>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-xl font-semibold">ใบเสนอราคา</h2>
+                <p>เลขที่: <span id="quotationNumber"></span></p>
+                <p>วันที่: <span id="quotationDate"></span></p>
+            </div>
+        </div>
+        <div class="flex justify-between mb-6">
+            <div class="w-1/2 pr-4">
+                <h3 class="text-lg font-semibold mb-2">ข้อมูลลูกค้า</h3>
+                <p>รหัส: <span id="customerCode"></span></p>
+                <p>ชื่อ: <span id="customerName"></span></p>
+                <p>ที่อยู่: <span id="customerAddress"></span></p>
+                <p>โทรศัพท์: <span id="customerPhone"></span></p>
+            </div>
+            <div class="w-1/2 pl-4">
+                <h3 class="text-lg font-semibold mb-2">ข้อมูลพนักงานขาย</h3>
+                <p>รหัส: <span id="salespersonCode"></span></p>
+                <p>ชื่อ: <span id="salespersonName"></span></p>
+                <p>แผนก: <span id="salespersonDepartment"></span></p>
+                <p>โทรศัพท์: <span id="salespersonPhone"></span></p>
+            </div>
+        </div>
+
+        <table class="w-full mb-6">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="border p-2 text-left">ลำดับ</th>
+                    <th class="border p-2 text-left">รายการสินค้า</th>
+                    <th class="border p-2 text-left">หน่วย</th>
+                    <th class="border p-2 text-left">จำนวน</th>
+                    <th class="border p-2 text-left">ราคา/หน่วย</th>
+                    <th class="border p-2 text-left">ส่วนลด</th>
+                    <th class="border p-2 text-left">จำนวนเงิน</th>
+                </tr>
+            </thead>
+            <tbody id="productList">
+                <!-- Product rows will be inserted here -->
+            </tbody>
+        </table>
+
+        <div class="text-right mb-6">
+            <p>รวมจำนวนเงิน: <span id="subTotal"></span> บาท</p>
+            <p>ส่วนลด: <span id="totalDiscount"></span> บาท</p>
+            <p>ราคาสินค้าบริการ: <span id="goodsServiceValue"></span> บาท</p>
+            <p>ภาษีมูลค่าเพิ่ม 7%: <span id="vat"></span> บาท</p>
+            <p class="font-semibold">จำนวนเงินรวมทั้งสิ้น: <span id="grandTotal"></span> บาท</p>
+        </div>
+
+        <div class="flex justify-between mt-12">
+            <div class="text-center">
+                <p class="mb-12">____________________</p>
+                <p>ผู้อนุมัติ</p>
+            </div>
+            <div class="text-center">
+                <p class="mb-12">____________________</p>
+                <p>จีรนุช บำรุงสุข <br/>ผู้เสนอราคา</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateQuotation() {
+            const quotationData = {
+                number: "2QT2408-00139",
+                date: "12/08/2024",
+                customer: {
+                    code: "AR1-461019",
+                    name: "หจก.เจวีวัสดุ",
+                    address: "267 ม.1 ต.สมเด็จ อ.สมเด็จ จ.กาฬสินธุ์ 46150",
+                    phone: "081-7179845 097-3027475"
+                },
+                salesperson: {
+                    code: "SP001",
+                    name: "จีรนุช บำรุงสุข",
+                    department: "ฝ่ายขาย",
+                    phone: "089-1234567"
+                },
+                products: [
+                    { name: "JORAKAY ซีเมนต์ผสมพลัส #710 ขาวไข่มุก (ถุง.) (20/ถุง)", unit: "กก./ถุง", quantity: 100, price: 60, discount: 0 },
+                    { name: "JORAKAY ซีเมนต์ผสมพลัส #766 น้ำตาลเบอร์รี่ (ถุง.)", unit: "กก./ถุง", quantity: 60, price: 70, discount: 0 },
+                    { name: "JORAKAY สีเบเยอร์ผสมพลัส #753 ชมพู (กก.)", unit: "ถุง", quantity: 20, price: 50, discount: 0 }
+                ]
+            };
+
+            // แสดงข้อมูลใบเสนอราคา
+            document.getElementById('quotationNumber').textContent = quotationData.number;
+            document.getElementById('quotationDate').textContent = quotationData.date;
+            
+            // ข้อมูลลูกค้า
+            document.getElementById('customerCode').textContent = quotationData.customer.code;
+            document.getElementById('customerName').textContent = quotationData.customer.name;
+            document.getElementById('customerAddress').textContent = quotationData.customer.address;
+            document.getElementById('customerPhone').textContent = quotationData.customer.phone;
+
+            // ข้อมูลพนักงานขาย
+            document.getElementById('salespersonCode').textContent = quotationData.salesperson.code;
+            document.getElementById('salespersonName').textContent = quotationData.salesperson.name;
+            document.getElementById('salespersonDepartment').textContent = quotationData.salesperson.department;
+            document.getElementById('salespersonPhone').textContent = quotationData.salesperson.phone;
+
+            // แสดงรายการสินค้า
+            const productList = document.getElementById('productList');
+            let subTotal = 0;
+            quotationData.products.forEach((product, index) => {
+                const amount = product.quantity * product.price - product.discount;
+                subTotal += amount;
+                const row = `
+                    <tr>
+                        <td class="border p-2">${index + 1}</td>
+                        <td class="border p-2">${product.name}</td>
+                        <td class="border p-2">${product.unit}</td>
+                        <td class="border p-2">${product.quantity}</td>
+                        <td class="border p-2">${product.price.toFixed(2)}</td>
+                        <td class="border p-2">${product.discount.toFixed(2)}</td>
+                        <td class="border p-2">${amount.toFixed(2)}</td>
+                    </tr>
+                `;
+                productList.innerHTML += row;
+            });
+
+            // คำนวณและแสดงยอดรวม
+            const totalDiscount = 0; // ในตัวอย่างนี้ไม่มีส่วนลดรวม
+            const goodsServiceValue = subTotal - totalDiscount;
+            const vat = goodsServiceValue * 0.07;
+            const grandTotal = goodsServiceValue + vat;
+
+            document.getElementById('subTotal').textContent = subTotal.toFixed(2);
+            document.getElementById('totalDiscount').textContent = totalDiscount.toFixed(2);
+            document.getElementById('goodsServiceValue').textContent = goodsServiceValue.toFixed(2);
+            document.getElementById('vat').textContent = vat.toFixed(2);
+            document.getElementById('grandTotal').textContent = grandTotal.toFixed(2);
+        }
+
+        // เรียกใช้ฟังก์ชันเมื่อโหลดหน้า
+        window.onload = generateQuotation;
+    </script>
+</body>
+</html>
